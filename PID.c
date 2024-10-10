@@ -1,36 +1,43 @@
 #include "PID.h"
 
 void PID_init(PIDVals *pid, int valP, int valI, int valD){
+
     pid->Kp = valP;
     pid->Ki = valI;
     pid->Kd = valD;
 
     pid->tau = 0;
     pid->t = 0;
-    pid-> error = 0;
-    pid-> output = 0;
-    pid-> prevError = 0;
-    pid-> prevOutput = 0;
+    pid->error = 0;
+    pid->output = 0;
+    pid->prevError = 0;
+    pid->prevOutput = 0;
+
+    pid->setPoint = 0;
 }
 
 
-int PID_calculateP(PIDVals *pid){
-    return 0;
+void PID_calculateP(PIDVals *pid){
+    pid->pOut = pid->Kp * pid->error;
 }
 
-int PID_calculateI(PIDVals *pid){
-    return 0;
+void PID_calculateI(PIDVals *pid){
+    pid->integral = pid->integral + pid->error;
+    pid->iOut = pid->Ki * pid->integral;
 }
 
-int PID_calculateD(PIDVals *pid){
-    return 0;
+void PID_calculateD(PIDVals *pid){
+    pid->derivative = pid->error - pid->prevError;
+    pid->dOut = pid->Kd * pid->derivative;
 }
 
 
-int PID_updateOutput(PIDVals *pid){
-    return 0;
+void PID_updateOutput(PIDVals *pid){
+    pid->prevOutput = pid->output;
+    pid->output = pid->pOut + pid->iOut + pid->dOut;
+    pid->prevError = pid->error;
 }
 
-int PID_updateError(PIDVals *pid){
-    return 0;
+void PID_updateError(PIDVals *pid, int currentDistance){
+    pid->error = currentDistance - pid->prevError + pid->prevOutput;
 }

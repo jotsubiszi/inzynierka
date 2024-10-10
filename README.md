@@ -4,7 +4,7 @@ PID Line follower
 
 TODO:
   - ~~start xd~~
-  - add PID algorithm
+  - add PID algorithm ~~?~~
   - add IR sensor handling
   - add motor handling
   - make it all work
