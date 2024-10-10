@@ -1,0 +1,19 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/avr-gcc",
+      "-mmcu=atmega328p",
+      "-std=c99",
+      "-Werror",
+      "-Wall",
+      "--param=min-pagesize=0",
+      "-c",
+      "-o",
+      "main.o",
+      "main.c"
+    ],
+    "directory": "/home/dumbkitto/chybaGit/trustMeIAmEngineer/inzynierka",
+    "file": "/home/dumbkitto/chybaGit/trustMeIAmEngineer/inzynierka/main.c",
+    "output": "/home/dumbkitto/chybaGit/trustMeIAmEngineer/inzynierka/main.o"
+  }
+]
