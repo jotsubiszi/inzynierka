@@ -1,21 +1,19 @@
-#define		low		0
-#define		high		1
+#define LOW 0
+#define HIGH 1
 
-#define		pullUp		1
-#define		noPullUp	0
+#define PULLUP 1
+#define NOPULLUP 0
 
-#define		input		0
-#define		output		1
+#define INPUT 0
+#define OUTPUT 1
 
-#define		portb		0
-#define		portc		1
-#define		portd		2
+#define CPORTB 0
+#define CPORTC 1
+#define CPORTD 2
 
-#define		portError	4
+#define PORTERROR 4
 
-#define		pinError	8
+#define PINERROR 8
 
-#define		true		1
-#define		false		0
-
-
+#define TRUE 1
+#define FALSE 0

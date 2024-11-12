@@ -1,29 +1,29 @@
 typedef struct {
-	/*gains*/
-	int Kp;
-	int Ki;
-	int Kd;
-	
-	int integral;
-	int derivative;
+  /*gains*/
+  int Kp;
+  int Ki;
+  int Kd;
 
-	int pOut;
-	int iOut;
-	int dOut;
+  int integral;
+  int derivative;
 
-	/*derivative low-pass filter*/
-	int tau;
+  int pOut;
+  int iOut;
+  int dOut;
 
-	/*time*/
-	int t;
+  /*derivative low-pass filter*/
+  int tau;
 
-	int error;
-	int prevError;
+  /*time*/
+  int t;
 
-	int output;
-	int prevOutput;
+  int error;
+  int prevError;
 
-	int setPoint;
+  int output;
+  int prevOutput;
+
+  int setPoint;
 
 } PIDVals;
 

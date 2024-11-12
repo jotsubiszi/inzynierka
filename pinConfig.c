@@ -1,233 +1,237 @@
 #include "pinConfig.h"
 
-
-void writePortB(uint8_t pin, uint8_t val){
-    if(val == 0){
-        PORTB &= ~(1 << pin);
-    }else if(val == 1){
-        PORTB |= (1 << pin);
-    }
+void writePortB(uint8_t pin, uint8_t val) {
+  if (val == 0) {
+    PORTB &= ~(1 << pin);
+  } else if (val == 1) {
+    PORTB |= (1 << pin);
+  }
 }
 
-void writePortC(uint8_t pin, uint8_t val){
-    if(val == 0){
-        PORTC &= ~(1 << pin);
-    }else if(val == 1){
-        PORTC |= (1 << pin);
-    }
-
+void writePortC(uint8_t pin, uint8_t val) {
+  if (val == 0) {
+    PORTC &= ~(1 << pin);
+  } else if (val == 1) {
+    PORTC |= (1 << pin);
+  }
 }
 
-void writePortD(uint8_t pin, uint8_t val){
-    if(val == 0){
-        PORTD &= ~(1 << pin);
-    }else if(val == 1){
-        PORTD |= (1 << pin);
-    }
-
+void writePortD(uint8_t pin, uint8_t val) {
+  if (val == 0) {
+    PORTD &= ~(1 << pin);
+  } else if (val == 1) {
+    PORTD |= (1 << pin);
+  }
 }
 
-void setPortB(uint8_t pin, uint8_t state, uint8_t mode){
-    // checks if we want to set our pin as output or as input then puts 0 or 1 in DDRB register
-    if(state == input){
-        DDRB &= ~(1 << pin);
+void setPortB(uint8_t pin, uint8_t state, uint8_t mode) {
+  // checks if we want to set our pin as output or as input then puts 0 or 1 in
+  // DDRB register
+  if (state == INPUT) {
+    DDRB &= ~(1 << pin);
 
-    }else if(state == output){
-        DDRB |= (1 << pin);
+  } else if (state == OUTPUT) {
+    DDRB |= (1 << pin);
 
-    }else{ 
-        return;
-    }
-    
-    writePortB(pin, mode);
+  } else {
+    return;
+  }
+
+  writePortB(pin, mode);
 }
 
-void setPortC(uint8_t pin, uint8_t state, uint8_t mode){
-    if(state == input){
-        DDRC &= ~(1 << pin);
+void setPortC(uint8_t pin, uint8_t state, uint8_t mode) {
+  if (state == INPUT) {
+    DDRC &= ~(1 << pin);
 
-    }else if(state == output){
-        DDRC |= (1 << pin);
+  } else if (state == OUTPUT) {
+    DDRC |= (1 << pin);
 
-    }else{ 
-        return;
-    }
+  } else {
+    return;
+  }
 
-    writePortC(pin, mode);
+  writePortC(pin, mode);
 }
 
-void setPortD(uint8_t pin, uint8_t state, uint8_t mode){
-    if(state == input){
-        DDRD &= ~(1 << pin);
+void setPortD(uint8_t pin, uint8_t state, uint8_t mode) {
+  if (state == INPUT) {
+    DDRD &= ~(1 << pin);
 
-    }else if(state == output){
-        DDRD |= (1 << pin);
+  } else if (state == OUTPUT) {
+    DDRD |= (1 << pin);
 
-    }else{ 
-        return;
-    }
+  } else {
+    return;
+  }
 
-    writePortD(pin, mode);
+  writePortD(pin, mode);
 }
 
 // returns port using arduino pin number
-uint8_t portCheck(uint8_t pin){
-    if(pin <= 7){
-        return portd;
-    }else if(pin > 7 && pin <= 13){
-        return portb;
-    }else if(pin > 13 && pin <= 19){
-        return portc;
-   }else{
-        return portError;
-    }
+uint8_t portCheck(uint8_t ardPin) {
+  if (ardPin <= 7) {
+    return CPORTD;
+  } else if (ardPin > 7 && ardPin <= 13) {
+    return CPORTB;
+  } else if (ardPin > 13 && ardPin <= 19) {
+    return CPORTC;
+  } else {
+    return PORTERROR;
+  }
 }
 
-// returns Port pin number
-uint8_t pinCheck(uint8_t pin){
-    if(pin <= 7){
-        return pin;
-    }else if(pin > 7 && pin <= 13){
-        return pin - 8;
-    }else if(pin > 13 && pin <= 19){
-        return pin - 14;
-    }else{
-        return pinError;
-    }
+// returns portx pin number using arduino pin
+uint8_t pinCheck(uint8_t ardPin) {
+  if (ardPin <= 7) {
+    return ardPin;
+  } else if (ardPin > 7 && ardPin <= 13) {
+    return ardPin - 8;
+  } else if (ardPin > 13 && ardPin <= 19) {
+    return ardPin - 14;
+  } else {
+    return PINERROR;
+  }
 }
 
-void setPortPin(uint8_t pin, uint8_t state, uint8_t mode){
-    if(portCheck(pin) != portError && pinCheck(pin) != pinError){
-        switch(portCheck(pin)){
-            case portb:
-            setPortB(pinCheck(pin), state, mode);
-            break;
-            
-            case portc:
-            setPortC(pinCheck(pin), state, mode);
-            break;
-            
-            case portd:
-            setPortB(pinCheck(pin), state, mode);
-            break;
-        }
+void setPortPin(uint8_t ardPin, uint8_t state, uint8_t mode) {
+  if (portCheck(ardPin) != PORTERROR && pinCheck(ardPin) != PINERROR) {
+    switch (portCheck(ardPin)) {
+    case CPORTB:
+      setPortB(pinCheck(ardPin), state, mode);
+      break;
+
+    case CPORTC:
+      setPortC(pinCheck(ardPin), state, mode);
+      break;
+
+    case CPORTD:
+      setPortB(pinCheck(ardPin), state, mode);
+      break;
     }
+  }
 }
 
-uint8_t isOutput(uint8_t pin){
-    uint8_t help;
-    switch(portCheck(pin)){
-        case portb:
-        help = DDRB;
-        if(DDRB == (help |= (1 << pinCheck(pin)))){
-            return true;
-        }else{
-            return false;
-        }
-        break;
-
-        case portc:
-        help = DDRC;
-        if(DDRC == (help |= (1 << pinCheck(pin)))){
-            return true;
-        }else{
-            return false;
-        }
-        break;
-
-        case portd:
-        help = DDRD;
-        if(DDRD == (help |= (1 << pinCheck(pin)))){
-            return true;
-        }else{
-            return false;
-        }
-        break;
-
-        default:
-        return false;
-        break;
+uint8_t isOutput(uint8_t ardPin) {
+  uint8_t help;
+  switch (portCheck(ardPin)) {
+  case CPORTB:
+    help = DDRB;
+    if (DDRB == (help |= (1 << pinCheck(ardPin)))) {
+      return TRUE;
+    } else {
+      return FALSE;
     }
+    break;
+
+  case CPORTC:
+    help = DDRC;
+    if (DDRC == (help |= (1 << pinCheck(ardPin)))) {
+      return TRUE;
+    } else {
+      return FALSE;
+    }
+    break;
+
+  case CPORTD:
+    help = DDRD;
+    if (DDRD == (help |= (1 << pinCheck(ardPin)))) {
+      return TRUE;
+    } else {
+      return FALSE;
+    }
+    break;
+
+  default:
+    return FALSE;
+    break;
+  }
 }
 
-uint8_t isInput(uint8_t pin){
-    uint8_t help;
-    switch(portCheck(pin)){
-        case portb:
-        help = DDRB;
-        if(DDRB == (help &= (1 << pinCheck(pin)))){
-            return true;
-        }else{
-            return false;
-        }
-        break;
-
-        case portc:
-        help = DDRC;
-        if(DDRC == (help &= (1 << pinCheck(pin)))){
-            return true;
-        }else{
-            return false;
-        }
-        break;
-
-        case portd:
-        help = DDRD;
-        if(DDRD == (help &= (1 << pinCheck(pin)))){
-            return true;
-        }else{
-            return false;
-        }
-        break;
-
-        default:
-        return false;
-        break;
+uint8_t isInput(uint8_t ardPin) {
+  uint8_t help;
+  switch (portCheck(ardPin)) {
+  case CPORTB:
+    help = DDRB;
+    if (DDRB == (help &= (1 << pinCheck(ardPin)))) {
+      return TRUE;
+    } else {
+      return FALSE;
     }
+    break;
+
+  case CPORTC:
+    help = DDRC;
+    if (DDRC == (help &= (1 << pinCheck(ardPin)))) {
+      return TRUE;
+    } else {
+      return FALSE;
+    }
+    break;
+
+  case CPORTD:
+    help = DDRD;
+    if (DDRD == (help &= (1 << pinCheck(ardPin)))) {
+      return TRUE;
+    } else {
+      return FALSE;
+    }
+    break;
+
+  default:
+    return FALSE;
+    break;
+  }
 }
 
-void writePinValue(uint8_t pin, uint8_t val){
-    if(isOutput(pin) == false){
-       return;
-    }
-    switch(portCheck(pin)){
-        case portb:
-        writePortB(pinCheck(pin), val);
-        break;
+void writePinValue(uint8_t ardPin, uint8_t val) {
+  if (isOutput(ardPin) == FALSE) {
+    return;
+  }
+  switch (portCheck(ardPin)) {
+  case CPORTB:
+    writePortB(pinCheck(ardPin), val);
+    break;
 
-        case portc:
-        writePortB(pinCheck(pin), val);
-        break;
+  case CPORTC:
+    writePortB(pinCheck(ardPin), val);
+    break;
 
-        case portd:
-        writePortB(pinCheck(pin), val);
-        break;
-    }
-
+  case CPORTD:
+    writePortB(pinCheck(ardPin), val);
+    break;
+  }
 }
 
-uint8_t readPinValue(uint8_t pin){
-    if(isInput(pin) == false){
-        return 0;
-    }
-    switch(portCheck(pin)){
-        case portb:
-        return (PINB & (1 << pinCheck(pin))) == 0 ? 0 : 1;
-        break;
+uint8_t readPinValue(uint8_t ardPin) {
+  if (!isInput(ardPin)) {
+    return 0;
+  }
+  // clang-format off
+  switch (portCheck(ardPin)) {
+    case CPORTB: return (PINB & (1 << pinCheck(ardPin))) == 0 ? 0 : 1; break;
+    case CPORTC: return (PINC & (1 << pinCheck(ardPin))) == 0 ? 0 : 1; break;
+    case CPORTD: return (PIND & (1 << pinCheck(ardPin))) == 0 ? 0 : 1; break;
 
-        case portc:
-        return (PINC & (1 << pinCheck(pin))) == 0 ? 0 : 1;
-        break;
-
-        case portd:
-        return (PIND & (1 << pinCheck(pin))) == 0 ? 0 : 1;
-        break;
-
-        default:
-        return 0;
-    }
+  default:
+    return 0;
+  }
+  // clang-format on
 }
 
-void setPinAsPWM(){
-
+// sets ardPins 6 (OC0A) and 5 (OC0B) as PWM output
+// bits COM0B0, COM0B1, COM0A0, COM0A1 in TCCR0A are used for toggling OC0X
+//
+// bits CS00, CS01 CS02 in register TCCR0B = prescaler. 0b100 for 256
+// prescaler = 256
+// frequency = 16MHz - prescaler - 1
+//
+// bits WGM00, WGM01, WGM02 PWM mode. 0b111 for fast mode
+//
+//
+//
+// OCR0A and OCR0B for vals from 0 to 255
+void setCounter0PWM(uint8_t initValA, uint8_t initValB) {
+  TCCR0A = 0;
+  TCCR0B = 0;
 }
