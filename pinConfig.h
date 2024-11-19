@@ -1,5 +1,5 @@
-#include <avr/io.h>
 #include "buzzWords.h"
+#include <avr/io.h>
 
 void writePortB(uint8_t, uint8_t);
 void writePortC(uint8_t, uint8_t);
@@ -21,3 +21,4 @@ void writePinValue(uint8_t, uint8_t);
 uint8_t readPinValue(uint8_t);
 
 void setCounter0PWM(uint8_t, uint8_t);
+void set0PWMVal(uint8_t, uint8_t);

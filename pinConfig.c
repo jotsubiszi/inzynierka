@@ -194,11 +194,11 @@ void writePinValue(uint8_t ardPin, uint8_t val) {
     break;
 
   case CPORTC:
-    writePortB(pinCheck(ardPin), val);
+    writePortC(pinCheck(ardPin), val);
     break;
 
   case CPORTD:
-    writePortB(pinCheck(ardPin), val);
+    writePortD(pinCheck(ardPin), val);
     break;
   }
 }
@@ -232,6 +232,12 @@ uint8_t readPinValue(uint8_t ardPin) {
 //
 // OCR0A and OCR0B for vals from 0 to 255
 void setCounter0PWM(uint8_t initValA, uint8_t initValB) {
-  TCCR0A = 0;
-  TCCR0B = 0;
+  setPortPin(6, OUTPUT, LOW);
+  TCCR0A |= (1 << WGM00) | (1 << WGM01) | (1 << COM0A1) | (1 << COM0B1);
+  TCCR0B |= (1 << WGM02) | (1 << CS02);
+}
+
+void set0PWMVal(uint8_t valA, uint8_t valB) {
+  OCR0A = valA;
+  OCR0B = valB;
 }
