@@ -1,5 +1,6 @@
 #include "pinConfig.h"
 #include <avr/io.h>
+#include <stdint.h>
 
 typedef struct {
   uint8_t farLeftSensorPin;

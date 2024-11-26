@@ -27,11 +27,11 @@ typedef struct {
 
 } PIDVals;
 
-void PID_init(PIDVals *pid, int valP, int valI, int valD);
+void PID_init(PIDVals *pid, int, int, int);
 
 void PID_calculateP(PIDVals *pid);
 void PID_calculateI(PIDVals *pid);
 void PID_calculateD(PIDVals *pid);
 
-void PID_updateError(PIDVals *pid, int currentDistance);
+void PID_updateError(PIDVals *pid, int);
 void PID_updateOutput(PIDVals *pid);

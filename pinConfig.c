@@ -25,19 +25,16 @@ void writePortD(uint8_t pin, uint8_t val) {
 }
 
 void setPortB(uint8_t pin, uint8_t state, uint8_t mode) {
-  // checks if we want to set our pin as output or as input then puts 0 or 1 in
-  // DDRB register
   if (state == INPUT) {
     DDRB &= ~(1 << pin);
 
   } else if (state == OUTPUT) {
     DDRB |= (1 << pin);
+    writePortB(pin, mode);
 
   } else {
     return;
   }
-
-  writePortB(pin, mode);
 }
 
 void setPortC(uint8_t pin, uint8_t state, uint8_t mode) {
@@ -46,12 +43,11 @@ void setPortC(uint8_t pin, uint8_t state, uint8_t mode) {
 
   } else if (state == OUTPUT) {
     DDRC |= (1 << pin);
+    writePortC(pin, mode);
 
   } else {
     return;
   }
-
-  writePortC(pin, mode);
 }
 
 void setPortD(uint8_t pin, uint8_t state, uint8_t mode) {
@@ -60,12 +56,11 @@ void setPortD(uint8_t pin, uint8_t state, uint8_t mode) {
 
   } else if (state == OUTPUT) {
     DDRD |= (1 << pin);
+    writePortD(pin, mode);
 
   } else {
     return;
   }
-
-  writePortD(pin, mode);
 }
 
 // returns port using arduino pin number
@@ -231,10 +226,13 @@ uint8_t readPinValue(uint8_t ardPin) {
 //
 //
 // OCR0A and OCR0B for vals from 0 to 255
-void setCounter0PWM(uint8_t initValA, uint8_t initValB) {
+void setCounter0PWM() {
   setPortPin(6, OUTPUT, LOW);
+  setPortPin(5, OUTPUT, LOW);
   TCCR0A |= (1 << WGM00) | (1 << WGM01) | (1 << COM0A1) | (1 << COM0B1);
   TCCR0B |= (1 << WGM02) | (1 << CS02);
+  OCR0A = 0;
+  OCR0B = 0;
 }
 
 void set0PWMVal(uint8_t valA, uint8_t valB) {
