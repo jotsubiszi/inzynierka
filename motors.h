@@ -11,7 +11,8 @@ typedef struct {
 
 } Motors;
 
-void motorsInit(Motors *mPins, uint8_t, uint8_t, uint8_t, uint8_t, uint8_t,
-                uint8_t);
+// Require creating Motors struct first!
+void motorsInit(Motors *mPins, uint8_t Ain1, uint8_t Ain2, uint8_t Bin1,
+                uint8_t Bin2, uint8_t Apwm, uint8_t Bpwm);
 
-void setMotorsSpeed(uint8_t, uint8_t);
+void setMotorsSpeed(uint8_t arduinoPin5PwmValue, uint8_t arduinoPin6PwmValue);

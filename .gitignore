@@ -34,3 +34,7 @@
 # maine
 *.json
 *.elf
+.clang-tidy
+
+tools/
+.cache/
