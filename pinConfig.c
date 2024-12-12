@@ -101,7 +101,7 @@ void setPortPin(uint8_t ardPin, uint8_t state, uint8_t mode) {
       break;
 
     case CPORTD:
-      setPortB(pinCheck(ardPin), state, mode);
+      setPortD(pinCheck(ardPin), state, mode);
       break;
     }
   }
@@ -148,7 +148,7 @@ uint8_t isInput(uint8_t ardPin) {
   switch (portCheck(ardPin)) {
   case CPORTB:
     help = DDRB;
-    if (DDRB == (help &= (1 << pinCheck(ardPin)))) {
+    if (DDRB == (help &= ~(1 << pinCheck(ardPin)))) {
       return TRUE;
     } else {
       return FALSE;
@@ -157,7 +157,7 @@ uint8_t isInput(uint8_t ardPin) {
 
   case CPORTC:
     help = DDRC;
-    if (DDRC == (help &= (1 << pinCheck(ardPin)))) {
+    if (DDRC == (help &= ~(1 << pinCheck(ardPin)))) {
       return TRUE;
     } else {
       return FALSE;
@@ -166,7 +166,7 @@ uint8_t isInput(uint8_t ardPin) {
 
   case CPORTD:
     help = DDRD;
-    if (DDRD == (help &= (1 << pinCheck(ardPin)))) {
+    if (DDRD == (help &= ~(1 << pinCheck(ardPin)))) {
       return TRUE;
     } else {
       return FALSE;
@@ -229,8 +229,8 @@ uint8_t readPinValue(uint8_t ardPin) {
 void setCounter0PWM() {
   setPortPin(6, OUTPUT, LOW);
   setPortPin(5, OUTPUT, LOW);
-  TCCR0A |= (1 << WGM00) | (1 << WGM01) | (1 << COM0A1) | (1 << COM0B1);
-  TCCR0B |= (1 << WGM02) | (1 << CS02);
+  TCCR0A = (1 << WGM00) | (1 << WGM01) | (1 << COM0A1) | (1 << COM0B1);
+  TCCR0B = (1 << WGM02) | (1 << CS02);
   OCR0A = 0;
   OCR0B = 0;
 }
