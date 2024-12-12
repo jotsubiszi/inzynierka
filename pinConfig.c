@@ -30,11 +30,11 @@ void setPortB(uint8_t pin, uint8_t state, uint8_t mode) {
 
   } else if (state == OUTPUT) {
     DDRB |= (1 << pin);
-    writePortB(pin, mode);
 
   } else {
     return;
   }
+  writePortB(pin, mode);
 }
 
 void setPortC(uint8_t pin, uint8_t state, uint8_t mode) {
@@ -43,11 +43,11 @@ void setPortC(uint8_t pin, uint8_t state, uint8_t mode) {
 
   } else if (state == OUTPUT) {
     DDRC |= (1 << pin);
-    writePortC(pin, mode);
 
   } else {
     return;
   }
+  writePortC(pin, mode);
 }
 
 void setPortD(uint8_t pin, uint8_t state, uint8_t mode) {
@@ -56,11 +56,11 @@ void setPortD(uint8_t pin, uint8_t state, uint8_t mode) {
 
   } else if (state == OUTPUT) {
     DDRD |= (1 << pin);
-    writePortD(pin, mode);
 
   } else {
     return;
   }
+  writePortD(pin, mode);
 }
 
 // returns port using arduino pin number
