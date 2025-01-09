@@ -1,6 +1,6 @@
-TARGET=lineFollower
+TARGET=final
 
-SRC=main.c
+SRC=PID.c pinConfig.c motors.c sensors.c lineFollower.c main.c
 OBJ=$(SRC:.c=.o)
 
 CC=avr-gcc

@@ -1,8 +1,8 @@
 typedef struct {
   /*gains*/
-  int Kp;
-  int Ki;
-  int Kd;
+  float Kp;
+  float Ki;
+  float Kd;
 
   int integral;
   int derivative;
@@ -19,7 +19,7 @@ typedef struct {
 
 } PIDVals;
 
-void PID_init(PIDVals *pid, int, int, int);
+void PID_init(PIDVals *pid, float, float, float);
 
 void PID_calculateP(PIDVals *pid);
 void PID_calculateI(PIDVals *pid);

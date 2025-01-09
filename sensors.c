@@ -16,22 +16,22 @@ void sensorInit(sensorsPins *sPins, uint8_t farLeftSensorPin,
   setPortPin(rightSensorPin, INPUT, internalPullUp);
   setPortPin(farRightSensorPin, INPUT, internalPullUp);
 }
-
+// my trc's are reversed logic!!!!!!
 int8_t getSensorsVals(sensorsPins *sPins) {
   int8_t sensorsVal = 0;
-  if (readPinValue(sPins->farLeftSensorPin) == HIGH) {
+  if (readPinValue(sPins->farLeftSensorPin) == LOW) {
     sensorsVal += 3;
   }
-  if (readPinValue(sPins->leftSensorPin) == HIGH) {
+  if (readPinValue(sPins->leftSensorPin) == LOW) {
     sensorsVal += 1;
   }
-  if (readPinValue(sPins->midSensorPin) == HIGH) {
+  if (readPinValue(sPins->midSensorPin) == LOW) {
     sensorsVal += 0;
   }
-  if (readPinValue(sPins->rightSensorPin) == HIGH) {
+  if (readPinValue(sPins->rightSensorPin) == LOW) {
     sensorsVal += -1;
   }
-  if (readPinValue(sPins->farRightSensorPin) == HIGH) {
+  if (readPinValue(sPins->farRightSensorPin) == LOW) {
     sensorsVal += -3;
   }
   return sensorsVal;
