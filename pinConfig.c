@@ -112,29 +112,17 @@ uint8_t isOutput(uint8_t ardPin) {
   switch (portCheck(ardPin)) {
   case CPORTB:
     help = DDRB;
-    if (DDRB == (help |= (1 << pinCheck(ardPin)))) {
-      return TRUE;
-    } else {
-      return FALSE;
-    }
+    return (DDRB == (help |= (1 << pinCheck(ardPin))));
     break;
 
   case CPORTC:
     help = DDRC;
-    if (DDRC == (help |= (1 << pinCheck(ardPin)))) {
-      return TRUE;
-    } else {
-      return FALSE;
-    }
+    return (DDRC == (help |= (1 << pinCheck(ardPin))));
     break;
 
   case CPORTD:
     help = DDRD;
-    if (DDRD == (help |= (1 << pinCheck(ardPin)))) {
-      return TRUE;
-    } else {
-      return FALSE;
-    }
+    return (DDRD == (help |= (1 << pinCheck(ardPin))));
     break;
 
   default:
@@ -148,29 +136,17 @@ uint8_t isInput(uint8_t ardPin) {
   switch (portCheck(ardPin)) {
   case CPORTB:
     help = DDRB;
-    if (DDRB == (help &= ~(1 << pinCheck(ardPin)))) {
-      return TRUE;
-    } else {
-      return FALSE;
-    }
+    return (DDRB == (help &= ~(1 << pinCheck(ardPin))));
     break;
 
   case CPORTC:
     help = DDRC;
-    if (DDRC == (help &= ~(1 << pinCheck(ardPin)))) {
-      return TRUE;
-    } else {
-      return FALSE;
-    }
+    return (DDRC == (help &= ~(1 << pinCheck(ardPin))));
     break;
 
   case CPORTD:
     help = DDRD;
-    if (DDRD == (help &= ~(1 << pinCheck(ardPin)))) {
-      return TRUE;
-    } else {
-      return FALSE;
-    }
+    return (DDRD == (help &= ~(1 << pinCheck(ardPin))));
     break;
 
   default:
