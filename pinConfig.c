@@ -178,16 +178,20 @@ uint8_t readPinValue(uint8_t ardPin) {
   if (!isInput(ardPin)) {
     return 0;
   }
-  // clang-format off
   switch (portCheck(ardPin)) {
-    case CPORTB: return (PINB & (1 << pinCheck(ardPin))) == 0 ? 0 : 1; break;
-    case CPORTC: return (PINC & (1 << pinCheck(ardPin))) == 0 ? 0 : 1; break;
-    case CPORTD: return (PIND & (1 << pinCheck(ardPin))) == 0 ? 0 : 1; break;
+  case CPORTB:
+    return (PINB & (1 << pinCheck(ardPin))) == 0 ? 0 : 1;
+    break;
+  case CPORTC:
+    return (PINC & (1 << pinCheck(ardPin))) == 0 ? 0 : 1;
+    break;
+  case CPORTD:
+    return (PIND & (1 << pinCheck(ardPin))) == 0 ? 0 : 1;
+    break;
 
   default:
     return 0;
   }
-  // clang-format on
 }
 
 // sets ardPins 6 (OC0A) and 5 (OC0B) as PWM output
@@ -205,8 +209,8 @@ uint8_t readPinValue(uint8_t ardPin) {
 void setCounter0PWM() {
   setPortPin(6, OUTPUT, LOW);
   setPortPin(5, OUTPUT, LOW);
-  TCCR0A = (1 << WGM00) | (1 << WGM01) | (1 << COM0A1) | (1 << COM0B1);
-  TCCR0B = (1 << WGM02) | (1 << CS02);
+  TCCR0A = (1 << WGM00) | /*(1 << WGM01) |*/ (1 << COM0A1) | (1 << COM0B1);
+  TCCR0B = /*(1 << WGM02) |*/ (1 << CS00);
   OCR0A = 0;
   OCR0B = 0;
 }

@@ -1,3 +1,4 @@
+#include "buzzWords.h"
 #include "lineFollower.h"
 #include <avr/io.h>
 #include <stdio.h>
@@ -32,31 +33,32 @@ sensorsPins sens;
 
 int main(void) {
   USART0_init();
-  followerInit(1, 2, 3, 4, 18, 12, 5, 6, 7, 8, 9, 0, 10, 3, 5, &moto, &sens,
-               &pid);
-  printf("PORTB: %i\r\n", PORTB);
-  printf("PORTC: %i\r\n", PORTC);
-  printf("PORTD: %i\r\n", PORTD);
-  printf("DDRB: %i\r\n", DDRB);
-  printf("DDRC: %i\r\n", DDRC);
-  printf("DDRD: %i\r\n", DDRD);
-  printf("OCR0A: %i\r\n", OCR0A);
-  printf("OCR0B: %i\r\n", OCR0B);
-  while (1 == 1) {
+
+  for (int i = 0; i <= 500; i++) {
+    printf("PORTB: %i\r\n", PORTB);
+  }
+  followerInit(13, 14, 3, 4, 255, 255, 10, 11, 7, 8, 9, 0, VALP, VALI, VALD,
+               &moto, &sens, &pid);
+
+  // printf("PORTB: %i\r\n", PORTB);
+  // printf("PORTC: %i\r\n", PORTC);
+  // printf("PORTD: %i\r\n", PORTD);
+  // printf("DDRB: %i\r\n", DDRB);
+  // printf("DDRC: %i\r\n", DDRC);
+  // printf("DDRD: %i\r\n", DDRD);
+  // printf("OCR0A: %i\r\n", OCR0A);
+  // printf("OCR0B: %i\r\n", OCR0B);
+  while (1) {
     followerUpdate(&sens, &pid);
-    // printf("APWM: %i BPWM: %i\n", moto.APwmVal, moto.BPwmVal);
-    //  printf();
-    printf("OCR0A: %i OCR0B: %i\r\n", OCR0A, OCR0B);
-    // printf("PORTD: %i\r\n", PORTD);
-    // printf("PORTB: %i\r\n", PORTB);
-    printf("error: %i\r\n", pid.error);
-    printf("P: %i\r\n", pid.pOut);
-    printf("I: %i\r\n", pid.iOut);
-    printf("D: %i\r\n", pid.dOut);
-    printf("integral: %i\r\n", pid.integral);
-    printf("derivative: %i\r\n", pid.derivative);
-    printf("sensVal: %i\r\n", getSensorsVals(&sens));
-    printf("-------------------------------------\r\n");
+    // printf("OCR0A: %i OCR0B: %i\r\n", OCR0A, OCR0B);
+    // printf("error: %i\r\n", pid.error);
+    // printf("P: %i\r\n", pid.pOut);
+    // printf("I: %i\r\n", pid.iOut);
+    // printf("D: %i\r\n", pid.dOut);
+    // printf("integral: %i\r\n", pid.integral);
+    // printf("derivative: %i\r\n", pid.derivative);
+    // printf("sensVal: %i\r\n", getSensorsVals(&sens, FALSE));
+    // printf("-------------------------------------\r\n");
   }
   return 0;
 }

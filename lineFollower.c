@@ -1,4 +1,5 @@
 #include "lineFollower.h"
+#include <stdint.h>
 
 void followerInit(uint8_t Ain1, uint8_t Ain2, uint8_t Bin1, uint8_t Bin2,
                   uint8_t Apwm, uint8_t Bpwm, uint8_t farLeftSensorPin,
@@ -13,26 +14,42 @@ void followerInit(uint8_t Ain1, uint8_t Ain2, uint8_t Bin1, uint8_t Bin2,
   PID_init(followerPID, valP, valI, valD);
 }
 
+uint8_t makeItPositive(uint8_t val) {
+  if (val < 0) {
+    return val * -1;
+  }
+  return val;
+}
+
+uint8_t slowerSpeedVal(uint8_t pidOut) {
+  if (BASESPEED - makeItPositive(pidOut) <= 0) {
+    return 0;
+  }
+  return BASESPEED - makeItPositive(pidOut);
+}
+
+uint8_t fasterSpeedVal(uint8_t pidOut) {
+  if (BASESPEED + makeItPositive(pidOut) >= 255) {
+    return 254;
+  }
+  return BASESPEED + makeItPositive(pidOut);
+}
+
 void followerUpdate(sensorsPins *followerSensorsPins, PIDVals *followerPID) {
 
-  PID_updateError(followerPID, getSensorsVals(followerSensorsPins));
+  PID_updateError(followerPID, getSensorsVals(followerSensorsPins, FALSE));
   PID_calculatePID(followerPID);
   PID_updateOutput(followerPID);
 
-  if (followerPID->output > 127) {
-    followerPID->output = 128;
-  }
-
-  if (followerPID->output < -127) {
-    followerPID->output = -128;
-  }
-
   if (followerPID->output < 0) {
-    followerPID->output *= -1;
-    setMotorsSpeed(128, followerPID->output + 127);
+    setMotorsSpeed(fasterSpeedVal(followerPID->output),
+                   slowerSpeedVal(followerPID->output));
+
   } else if (followerPID->output > 0) {
-    setMotorsSpeed(followerPID->output + 127, 128);
+    setMotorsSpeed(slowerSpeedVal(followerPID->output),
+                   fasterSpeedVal(followerPID->output));
+
   } else if (followerPID->output == 0) {
-    setMotorsSpeed(128, 128);
+    setMotorsSpeed(BASESPEED, BASESPEED);
   }
 }
