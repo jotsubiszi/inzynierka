@@ -18,7 +18,7 @@
 #define TRUE 1
 #define FALSE 0
 
-#define BASESPEED 127 // max: 127!!!!
+#define BASESPEED 90 // max: 127!!!!
 #define AMOD 0
 
 #define VALP 20
